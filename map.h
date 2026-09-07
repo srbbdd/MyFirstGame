@@ -18,7 +18,7 @@ struct Room
 	int w = 0;
 	int centreX() const
 	{
-		return (x + y / 2);
+		return (x + w / 2);
 	}
 	int centreY()const
 	{

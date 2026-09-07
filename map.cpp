@@ -114,5 +114,67 @@ void Map::buildRooms(BSPNode& node)
 }
 void Map::connectRooms(BSPNode& node)
 {
-
+	if (!node.left)
+	{
+		return;
+	}
+	connectRooms(*node.left);
+	connectRooms(*node.right);
+	BSPNode* l = node.left.get();
+	while (l->left)
+	{
+		l = coinFlip() ? l->left.get() : l->right.get();
+	}
+	BSPNode* r = node.right.get();
+	while (r->left)
+	{
+		r = coinFlip() ? r->left.get() : r->right.get();
+	}
+	if (!l->hasroom || !r->hasroom)
+	{
+		return;
+	}
+	int x1 = l->room.centreX();
+	int x2 = r->room.centreX();
+	int y1 = l->room.centreY();
+	int y2 = r->room.centreY();
+	if (coinFlip())
+	{
+		carveHLine(x1, x2, y1);
+		carveVLine(y1, y2, x2);
+	}
+	else
+	{
+		carveVLine(y1, y2, x1);
+		carveHLine(x1, x2, y2);
+	}
+}
+void Map::carveTile(int x, int y, TileType type)
+{
+	if (x >= 0 && x < MAP_WIDTH && y >= 0 && y < MAP_HEIGHT)
+	{
+		tiles[y][x].type = type;
+	}
+}
+void Map::carveHLine(int x1, int x2, int y)
+{
+	if (x1 > x2)
+	{
+		std::swap(x1, x2);
+	}
+	for (int x = x1; x <= x2; x++)
+	{
+		carveTile(x, y, TileType::Floor);
+	}
+}
+void Map::carveVLine(int y1, int y2, int x)
+{
+	if (y1 > y2)
+	{
+		std::swap(y1, y2);
+	}
+	for (int y = y1; y <= y2; y++)
+	{
+		carveTile(x, y, TileType::Floor);
+	}
 }
