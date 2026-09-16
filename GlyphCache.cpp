@@ -31,3 +31,27 @@ GlyphCache::GlyphCache(SDL_Renderer* sdl, const char* fontPath, float ptSize):m_
 	TTF_CloseFont(font);
 	m_loaded = true;
 }
+GlyphCache::~GlyphCache()
+{
+	for (Glyph& g : m_glyphs)
+	{
+		if (g.tex)
+		{
+			SDL_DestroyTexture(g.tex);
+		}
+	}
+}
+void GlyphCache::drawGlyph(int col, int row, char ch, SDL_Color color)const
+{
+	if (ch<FIRST_CHAR || ch>LAST_CHAR)
+	{
+		ch = '?';
+	}
+	const Glyph& g = m_glyphs[ch - FIRST_CHAR];
+	SDL_SetTextureColorMod(g.tex, color.r, color.g, color.b);
+	SDL_SetTextureAlphaMod(g.tex, color.a);
+	float x = col * TILE_SIZE + (TILE_SIZE - g.w) * 0.5f;
+	float y = row * TILE_SIZE + (TILE_SIZE - g.h) * 0.5f;
+	SDL_FRect dst = { SDL_floorf(x + 0.5f),SDL_floorf(y + 0.5f),(float)g.w,(float)g.h };
+	SDL_RenderTexture(m_sdl, g.tex, nullptr, &dst);
+}
