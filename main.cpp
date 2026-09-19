@@ -40,4 +40,61 @@ int main(int argc,char* argv[])
 	}
 	Map map;
 	map.generate();
+	auto draw = [&]()
+		{
+			SDL_SetRenderDrawColor(sdl, BG.r, BG.g, BG.b, BG.a);
+			SDL_RenderClear(sdl);
+			for (int row = 0; row < MAP_HEIGHT; row++)
+			{
+				for (int col = 0; col < MAP_WIDTH; col++)
+				{
+					if (map.tiles[row][col].type == TileType::Floor)
+					{
+						glyphs.drawGlyph(row, col, '.', FLOOR);
+					}
+					else
+					{
+						glyphs.drawGlyph(row, col, '#', WALL);
+					}
+				}
+			}
+			SDL_RenderPresent(sdl);
+		};
+	draw();
+	bool running = true;
+	SDL_Event event;
+	while (running)
+	{
+		SDL_WaitEvent(&event);
+		bool dirty = false;
+		switch(event.type)
+		{
+		case SDL_EVENT_QUIT:
+			running = false;
+			break;
+		case SDL_EVENT_WINDOW_EXPOSED:
+			dirty = true;
+			break;
+		case SDL_EVENT_KEY_DOWN:
+			if (event.key.scancode == SDL_SCANCODE_ESCAPE)
+			{
+				running = false;
+			}
+			if (event.key.scancode == SDL_SCANCODE_SPACE)
+			{
+				map.generate();
+				dirty = true;
+				break;
+			}
+		}
+		if (dirty)
+		{
+			draw();
+		}
+	}
+	SDL_DestroyRenderer(sdl);
+	SDL_DestroyWindow(window);
+	TTF_Quit();
+	SDL_Quit();
+	return 0;
 }

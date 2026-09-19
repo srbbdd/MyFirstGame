@@ -12,7 +12,7 @@ GlyphCache::GlyphCache(SDL_Renderer* sdl, const char* fontPath, float ptSize):m_
 	const SDL_Color wight = { 255,255,255,255 };
 	for (int c = FIRST_CHAR; c <= LAST_CHAR; c++)
 	{
-		char str[2] = { (char)c ,'/n' };
+		char str[2] = { (char)c ,'\0' };
 		SDL_Surface* surf = TTF_RenderText_Blended(font, str, 0, wight);
 		if (!surf)
 		{

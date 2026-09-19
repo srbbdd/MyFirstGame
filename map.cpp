@@ -1,5 +1,5 @@
 #include "map.h"
-void Map::generate(unsigned int seed = 0)
+void Map::generate(unsigned int seed)
 {
 	for (auto& row : tiles)
 	{
