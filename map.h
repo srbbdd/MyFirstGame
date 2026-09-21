@@ -18,11 +18,11 @@ struct Room
 	int w = 0;
 	int centreX() const
 	{
-		return (x + w / 2);
+		return (x + h / 2);
 	}
 	int centreY()const
 	{
-		return (y + h / 2);
+		return (y + w / 2);
 	}
 };
 class Map

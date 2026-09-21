@@ -37,7 +37,7 @@ void Map::split(BSPNode& node, int depth)
 	}
 	bool canSplitH = (node.h >= MIN_LEAF_H * 2);
 	bool canSplitV = (node.w >= MIN_LEAF_W * 2);
-	if (canSplitH && canSplitV)
+	if (!canSplitH && !canSplitV)
 	{
 		return;
 	}
@@ -64,7 +64,7 @@ void Map::split(BSPNode& node, int depth)
 		node.left->w = node.w;
 		node.left->h = splity - node.y;
 		node.right->x = node.x;
-		node.right->y = node.y;
+		node.right->y = splity;
 		node.right->w = node.w;
 		node.right->h = (node.h + node.y) - splity;
 	}
@@ -108,7 +108,7 @@ void Map::buildRooms(BSPNode& node)
 			carveTile(x, y, TileType::Floor);
 		}
 	}
-	node.room = { rx,ry,rw,rh };
+	node.room = { rx,ry,rh,rw };
 	node.hasroom = true;
 	rooms.push_back(node.room);
 }
