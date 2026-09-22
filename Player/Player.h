@@ -1,5 +1,5 @@
 #pragma once
-#include "..\My Game\map.h"
+#include "..\map.h"
 struct Player
 {
 	int x = 0;

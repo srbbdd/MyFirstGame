@@ -2,6 +2,7 @@
 #include "SDL3/SDL.h"
 #include "map.h"
 #include "GlyphCache.h"
+#include "Player/Player.h"
 static const char* FONT_PATH = "RobotoMono-Light.ttf";
 static const float FONT_PH = 20.0f;
 static const SDL_Color BG = { 12,12,16,255 };
@@ -39,7 +40,16 @@ int main(int argc,char* argv[])
 		return 1;
 	}
 	Map map;
+	Player player;
+	auto newGame = [&]()
+		{
+			map.generate();
+			player.x = map.rooms[0].centreX();
+			player.y = map.rooms[0].centreY();
+			player.hp = player.maxHp;
+		};
 	map.generate();
+	static const SDL_Color PLAYER = { 255,230,150,255 };
 	auto draw = [&]()
 		{
 			SDL_SetRenderDrawColor(sdl, BG.r, BG.g, BG.b, BG.a);
@@ -58,6 +68,7 @@ int main(int argc,char* argv[])
 					}
 				}
 			}
+			glyphs.drawGlyph(player.x, player.y, '@', PLAYER);
 			SDL_RenderPresent(sdl);
 		};
 	draw();
@@ -92,7 +103,6 @@ int main(int argc,char* argv[])
 			draw();
 		}
 	}
-	SDL_DestroyRenderer(sdl);
 	SDL_DestroyWindow(window);
 	TTF_Quit();
 	SDL_Quit();
