@@ -87,14 +87,37 @@ int main(int argc,char* argv[])
 			dirty = true;
 			break;
 		case SDL_EVENT_KEY_DOWN:
-			if (event.key.scancode == SDL_SCANCODE_ESCAPE)
+			int dx = 0;
+			int dy = 0;
+			switch (event.key.scancode)
 			{
-				running = false;
-			}
-			if (event.key.scancode == SDL_SCANCODE_SPACE)
-			{
-				map.generate();
+			case SDL_SCANCODE_UP:
+			case SDL_SCANCODE_W:
+				dy = -1;
+				break;
+			case SDL_SCANCODE_DOWN:
+			case SDL_SCANCODE_S:
+				dy = +1;
+				break;
+			case SDL_SCANCODE_LEFT:
+			case SDL_SCANCODE_A:
+				dx = -1;
+				break;
+			case SDL_SCANCODE_RIGHT:
+			case SDL_SCANCODE_D:
+				dx = +1;
+				break;
+			case SDL_SCANCODE_SPACE:
+				newGame();
 				dirty = true;
+				break;
+			case SDL_SCANCODE_ESCAPE:
+				running = false;
+				break;
+			}
+			if (dx != 0 || dy != 0)
+			{
+				dirty = player.tryMove(dx, dy, map);
 				break;
 			}
 		}
