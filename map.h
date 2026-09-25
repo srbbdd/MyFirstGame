@@ -10,6 +10,8 @@ enum class TileType{Wall,Floor};
 struct Tile
 {
 	TileType type = TileType::Wall;
+	bool visible = false;
+	bool explored = false;
 };
 struct Room
 {
@@ -19,11 +21,11 @@ struct Room
 	int w = 0;
 	int centreX() const
 	{
-		return (x + h / 2);
+		return (x + w / 2);
 	}
 	int centreY()const
 	{
-		return (y + w / 2);
+		return (y + h / 2);
 	}
 };
 class Map

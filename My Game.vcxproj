@@ -151,11 +151,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FOV.cpp" />
     <ClCompile Include="GlyphCache.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FOV.h" />
     <ClInclude Include="GlyphCache.h" />
     <ClInclude Include="map.h" />
   </ItemGroup>

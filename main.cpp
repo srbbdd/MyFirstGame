@@ -48,7 +48,7 @@ int main(int argc,char* argv[])
 			player.y = map.rooms[0].centreY();
 			player.hp = player.maxHp;
 		};
-	map.generate();
+	newGame();
 	static const SDL_Color PLAYER = { 255,230,150,255 };
 	auto draw = [&]()
 		{
@@ -60,11 +60,11 @@ int main(int argc,char* argv[])
 				{
 					if (map.tiles[row][col].type == TileType::Floor)
 					{
-						glyphs.drawGlyph(row, col, '.', FLOOR);
+						glyphs.drawGlyph(col, row, '.', FLOOR);
 					}
 					else
 					{
-						glyphs.drawGlyph(row, col, '#', WALL);
+						glyphs.drawGlyph(col, row, '#', WALL);
 					}
 				}
 			}

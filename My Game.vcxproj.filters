@@ -24,12 +24,18 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="FOV.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="map.h">
       <Filter>源文件</Filter>
     </ClInclude>
     <ClInclude Include="GlyphCache.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FOV.h">
       <Filter>源文件</Filter>
     </ClInclude>
   </ItemGroup>
